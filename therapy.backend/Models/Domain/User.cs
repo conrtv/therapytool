@@ -10,6 +10,6 @@
         public required string Role { get; set; } //Role (Admin, OT, PT, OTA, PTA)
 
         // Relationships
-        public required ICollection<School> Schools { get; set; }
+        public ICollection<School> Schools { get; set; } = new List<School>();
     }
 }

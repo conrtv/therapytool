@@ -8,7 +8,7 @@
         public required string Address { get; set; }
         
         // Relationships
-        public required ICollection<Student> Students { get; set; }
-        public required ICollection<User> Users { get; set; }
+        public ICollection<Student>? Students { get; set; }
+        public ICollection<User>? Users { get; set; }
     }
 }

@@ -1,6 +1,9 @@
-@therapy.backend_HostAddress = http://localhost:5128
+@backend_HostAddress = http://localhost:5128
 
-GET {{therapy.backend_HostAddress}}/weatherforecast/
+###
+GET {{backend_HostAddress}}/api/Users
 Accept: application/json
 
 ###
+GET {{backend_HostAddress}}/api/Users/1
+Accept: application/json

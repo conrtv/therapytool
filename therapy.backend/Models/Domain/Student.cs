@@ -6,11 +6,11 @@
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public required string Grade { get; set; }
+        public string? Grade { get; set; }
         
         // Relationships
         public int SchoolId { get; set; }
-        public required School School { get; set; }
+        public School? School { get; set; }
         
     }
 }

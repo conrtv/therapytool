@@ -56,6 +56,26 @@ namespace therapy.backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Schools");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "1234 School St",
+                            Name = "School 1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "5678 School St",
+                            Name = "School 2"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "91011 School St",
+                            Name = "School 3"
+                        });
                 });
 
             modelBuilder.Entity("therapy.backend.Models.Domain.Student", b =>
@@ -74,7 +94,6 @@ namespace therapy.backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Grade")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -89,6 +108,32 @@ namespace therapy.backend.Migrations
                     b.HasIndex("SchoolId");
 
                     b.ToTable("Students");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateOfBirth = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Student",
+                            LastName = "One",
+                            SchoolId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateOfBirth = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Student",
+                            LastName = "Two",
+                            SchoolId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DateOfBirth = new DateTime(2000, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Student",
+                            LastName = "Three",
+                            SchoolId = 3
+                        });
                 });
 
             modelBuilder.Entity("therapy.backend.Models.Domain.User", b =>
@@ -122,6 +167,35 @@ namespace therapy.backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "email@email.com",
+                            FirstName = "John",
+                            LastName = "Doe",
+                            PasswordHash = "password",
+                            Role = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Email = "email@email.com",
+                            FirstName = "Jane",
+                            LastName = "Doe",
+                            PasswordHash = "password",
+                            Role = "OT"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Email = "email@email.com",
+                            FirstName = "John",
+                            LastName = "Smith",
+                            PasswordHash = "password",
+                            Role = "PT"
+                        });
                 });
 
             modelBuilder.Entity("SchoolUser", b =>
