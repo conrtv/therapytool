@@ -15,12 +15,17 @@ public class SqlStudentRepository(TherapyDbContext dbContext) : IStudentReposito
     {
         return await dbContext.Students.Include(s => s.School).FirstOrDefaultAsync(s => s.Id == id);
     }
+    
+    public async Task<List<Student>> GetBySchoolIdAsync(int schoolId)
+    {
+        return await dbContext.Students.Where(student => student.SchoolId == schoolId).Include(student => student.School).ToListAsync();
+    }
 
     public async Task<Student> CreateAsync(Student student)
     {
         await dbContext.Students.AddAsync(student);
         await dbContext.SaveChangesAsync();
-        return student;
+        return await dbContext.Students.Include(s => s.School).FirstOrDefaultAsync(s => s.Id == student.Id);
     }
 
     public async Task<Student?> UpdateAsync(int id, Student student)
@@ -55,4 +60,6 @@ public class SqlStudentRepository(TherapyDbContext dbContext) : IStudentReposito
         await dbContext.SaveChangesAsync();
         return existingStudent;
     }
+    
+
 }

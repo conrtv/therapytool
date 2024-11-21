@@ -23,6 +23,9 @@ public class StudentController(TherapyDbContext dbContext, IStudentRepository st
                 Id = studentDomain.Id,
                 FirstName = studentDomain.FirstName,
                 LastName = studentDomain.LastName,
+                DateOfBirth = studentDomain.DateOfBirth,
+                Grade = studentDomain.Grade,
+                SchoolId = studentDomain.SchoolId,
                 School = studentDomain.School != null ? new SchoolDto
                 {
                     Id = studentDomain.School.Id,
@@ -52,6 +55,9 @@ public class StudentController(TherapyDbContext dbContext, IStudentRepository st
             Id = studentDomain.Id,
             FirstName = studentDomain.FirstName,
             LastName = studentDomain.LastName,
+            DateOfBirth = studentDomain.DateOfBirth,
+            Grade = studentDomain.Grade,
+            SchoolId = studentDomain.SchoolId,
             School = studentDomain.School != null ? new SchoolDto
             {
                 Id = studentDomain.School.Id,
@@ -60,6 +66,33 @@ public class StudentController(TherapyDbContext dbContext, IStudentRepository st
             } : null
         };
         return Ok(studentDto);
+    }
+    
+    // GET STUDENTS BY SCHOOL ID
+    // https://localhost:5128/api/students/school/{schoolId}
+    [HttpGet]
+    [Route("school/{schoolId:int}")]
+    public async Task<IActionResult> GetBySchoolId(int schoolId)
+    {
+        var studentsDomain = await studentRepository.GetBySchoolIdAsync(schoolId);
+        
+        var studentsDto = studentsDomain.Select(studentDomain => new StudentDto()
+            {
+                Id = studentDomain.Id,
+                FirstName = studentDomain.FirstName,
+                LastName = studentDomain.LastName,
+                DateOfBirth = studentDomain.DateOfBirth,
+                Grade = studentDomain.Grade,
+                SchoolId = studentDomain.SchoolId,
+                School = studentDomain.School != null ? new SchoolDto
+                {
+                    Id = studentDomain.School.Id,
+                    Name = studentDomain.School.Name,
+                    Address = studentDomain.School.Address
+                } : null
+            })
+            .ToList();
+        return Ok(studentsDto);
     }
     
     // CREATE STUDENT
@@ -85,6 +118,7 @@ public class StudentController(TherapyDbContext dbContext, IStudentRepository st
             LastName = studentDomain.LastName,
             DateOfBirth = studentDomain.DateOfBirth,
             Grade = studentDomain.Grade,
+            SchoolId = studentDomain.SchoolId,
             School = studentDomain.School != null ? new SchoolDto
             {
                 Id = studentDomain.School.Id,

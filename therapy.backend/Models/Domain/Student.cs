@@ -10,7 +10,7 @@
         
         // Relationships
         public int SchoolId { get; set; }
-        public School? School { get; set; }
+        public School School { get; set; }
         
     }
 }

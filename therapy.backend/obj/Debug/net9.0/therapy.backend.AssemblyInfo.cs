@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("therapy.backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+88b7bb858d07317a9480f868b023152fc51a5009")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0dfd3f5fc8dafba28c97922618c782c07a07f4ec")]
 [assembly: System.Reflection.AssemblyProductAttribute("therapy.backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("therapy.backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
