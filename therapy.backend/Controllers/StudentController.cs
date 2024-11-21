@@ -94,4 +94,75 @@ public class StudentController(TherapyDbContext dbContext, IStudentRepository st
         };
         return CreatedAtAction(nameof(GetById), new { id = studentDomain.Id }, studentDto);
     }
+    
+    // UPDATE STUDENT
+    // https://localhost:5128/api/students/{id}
+    [HttpPut]
+    [Route("{id:int}")]
+    
+    public async Task<IActionResult> Update(int id, [FromBody] StudentUpdateDto studentUpdateDto)
+    {
+        var studentDomain = new Student
+        {
+            Id = id,
+            FirstName = studentUpdateDto.FirstName,
+            LastName = studentUpdateDto.LastName,
+            DateOfBirth = studentUpdateDto.DateOfBirth,
+            Grade = studentUpdateDto.Grade,
+            SchoolId = studentUpdateDto.SchoolId
+        };
+        
+        studentDomain = await studentRepository.UpdateAsync(id, studentDomain);
+        
+        if (studentDomain == null)
+        {
+            return NotFound();
+        }
+        
+        var studentDto = new StudentDto
+        {
+            Id = studentDomain.Id,
+            FirstName = studentDomain.FirstName,
+            LastName = studentDomain.LastName,
+            DateOfBirth = studentDomain.DateOfBirth,
+            Grade = studentDomain.Grade,
+            School = studentDomain.School != null ? new SchoolDto
+            {
+                Id = studentDomain.School.Id,
+                Name = studentDomain.School.Name,
+                Address = studentDomain.School.Address
+            } : null
+        };
+        return Ok(studentDto);
+    }
+    
+    // DELETE STUDENT
+    // https://localhost:5128/api/students/{id}
+    [HttpDelete]
+    [Route("{id:int}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var studentDomain = await studentRepository.DeleteAsync(id);
+        
+        if (studentDomain == null)
+        {
+            return NotFound();
+        }
+        
+        var studentDto = new StudentDto
+        {
+            Id = studentDomain.Id,
+            FirstName = studentDomain.FirstName,
+            LastName = studentDomain.LastName,
+            DateOfBirth = studentDomain.DateOfBirth,
+            Grade = studentDomain.Grade,
+            School = studentDomain.School != null ? new SchoolDto
+            {
+                Id = studentDomain.School.Id,
+                Name = studentDomain.School.Name,
+                Address = studentDomain.School.Address
+            } : null
+        };
+        return Ok(studentDto);
+    }
 }
