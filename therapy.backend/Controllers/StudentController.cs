@@ -104,7 +104,6 @@ public class StudentController(TherapyDbContext dbContext, IStudentRepository st
     {
         var studentDomain = new Student
         {
-            Id = id,
             FirstName = studentUpdateDto.FirstName,
             LastName = studentUpdateDto.LastName,
             DateOfBirth = studentUpdateDto.DateOfBirth,

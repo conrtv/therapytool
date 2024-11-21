@@ -23,13 +23,36 @@ public class SqlStudentRepository(TherapyDbContext dbContext) : IStudentReposito
         return student;
     }
 
-    public Task<Student?> UpdateAsync(int id, Student student)
+    public async Task<Student?> UpdateAsync(int id, Student student)
     {
-        throw new NotImplementedException();
+        var existingStudent = await dbContext.Students.FirstOrDefaultAsync(s => s.Id == id);
+        
+        if (existingStudent == null)
+        {
+            return null;
+        }
+        
+        existingStudent.FirstName = student.FirstName;
+        existingStudent.LastName = student.LastName;
+        existingStudent.DateOfBirth = student.DateOfBirth;
+        existingStudent.Grade = student.Grade;
+        existingStudent.SchoolId = student.SchoolId;
+        
+        await dbContext.SaveChangesAsync();
+        return existingStudent;
     }
 
-    public Task<Student?> DeleteAsync(int id)
+    public async Task<Student?> DeleteAsync(int id)
     {
-        throw new NotImplementedException();
+        var existingStudent = await dbContext.Students.FirstOrDefaultAsync(s => s.Id == id);
+        
+        if (existingStudent == null)
+        {
+            return null;
+        }
+        
+        dbContext.Students.Remove(existingStudent);
+        await dbContext.SaveChangesAsync();
+        return existingStudent;
     }
 }
