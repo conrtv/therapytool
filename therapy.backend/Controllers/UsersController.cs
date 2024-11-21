@@ -155,7 +155,7 @@ public class UsersController(TherapyDbContext dbContext, IUserRepository userRep
     // ASSIGN STUDENT TO USER
     // https://localhost:5128/api/Users/{userId}/students/{studentId}
     [HttpPost]
-    [Route("{userId:int}/students/{studentId:int}")]
+    [Route("{userId:int}/students/assign")]
     public async Task<IActionResult> AssignStudentsToUser(int userId, [FromBody] StudentAssignDto studentAssignDto)
     {
         
@@ -163,7 +163,7 @@ public class UsersController(TherapyDbContext dbContext, IUserRepository userRep
         var user = await userRepository.GetUserWithStudentsAsync(userId);
         
         if (user == null) return NotFound();
-        
+
         var students = await studentRepository.GetStudentsByIdAsync(StudentAssignDto.StudentIds);
         
         Console.WriteLine("Retrieved Student IDs: " + string.Join(", ", students.Select(s => s.Id)));
