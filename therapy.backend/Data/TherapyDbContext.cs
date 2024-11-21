@@ -18,6 +18,12 @@ namespace therapy.backend.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configure relationships
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.School)
+                .WithMany(sch => sch.Students)
+                .HasForeignKey(s => s.SchoolId);
+            
             // Seed data for Users
             var users = new List<User>()
             {
@@ -110,11 +116,7 @@ namespace therapy.backend.Data
             //seed students to the database
             modelBuilder.Entity<Student>().HasData(students);
             
-            // Configure relationships
-            modelBuilder.Entity<Student>()
-                .HasOne(s => s.School)
-                .WithMany(sch => sch.Students)
-                .HasForeignKey(s => s.SchoolId);
+
         }
     }
 }
