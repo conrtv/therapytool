@@ -6,7 +6,7 @@
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
-        public string? Grade { get; set; }
+        public int? Grade { get; set; }
         
         // Relationships
         public int SchoolId { get; set; }

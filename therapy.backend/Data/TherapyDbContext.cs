@@ -109,6 +109,12 @@ namespace therapy.backend.Data
             
             //seed students to the database
             modelBuilder.Entity<Student>().HasData(students);
+            
+            // Configure relationships
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.School)
+                .WithMany(sch => sch.Students)
+                .HasForeignKey(s => s.SchoolId);
         }
     }
 }

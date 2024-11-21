@@ -28,6 +28,7 @@ builder.Services.AddDbContext<TherapyDbContext>(options =>
 
 builder.Services.AddScoped<IUserRepository, SqlUserRepository>();
 builder.Services.AddScoped<ISchoolRepository, SqlSchoolRepository>();
+builder.Services.AddScoped<IStudentRepository, SqlStudentRepository>();
 
 var app = builder.Build();
 

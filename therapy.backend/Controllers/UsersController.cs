@@ -98,7 +98,6 @@ public class UsersController(TherapyDbContext dbContext, IUserRepository userRep
     [Route("{id:int}")]
     public async Task<IActionResult> Update(int id, [FromBody] UserUpdateDto userUpdateDto)
     {
-        // var userDomain = await dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
         // map UserUpdateDto to User domain model
         var userDomain = new User
         {

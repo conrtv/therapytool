@@ -93,8 +93,8 @@ namespace therapy.backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Grade")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("Grade")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
