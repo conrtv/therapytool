@@ -198,6 +198,21 @@ namespace therapy.backend.Migrations
                         });
                 });
 
+            modelBuilder.Entity("therapy.backend.Models.Domain.UserStudent", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "StudentId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("UserStudent");
+                });
+
             modelBuilder.Entity("SchoolUser", b =>
                 {
                     b.HasOne("therapy.backend.Models.Domain.School", null)
@@ -224,9 +239,38 @@ namespace therapy.backend.Migrations
                     b.Navigation("School");
                 });
 
+            modelBuilder.Entity("therapy.backend.Models.Domain.UserStudent", b =>
+                {
+                    b.HasOne("therapy.backend.Models.Domain.Student", "Student")
+                        .WithMany("UserStudents")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("therapy.backend.Models.Domain.User", "User")
+                        .WithMany("UserStudents")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("therapy.backend.Models.Domain.School", b =>
                 {
                     b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("therapy.backend.Models.Domain.Student", b =>
+                {
+                    b.Navigation("UserStudents");
+                });
+
+            modelBuilder.Entity("therapy.backend.Models.Domain.User", b =>
+                {
+                    b.Navigation("UserStudents");
                 });
 #pragma warning restore 612, 618
         }

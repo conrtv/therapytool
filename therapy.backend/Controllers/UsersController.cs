@@ -8,7 +8,7 @@ namespace therapy.backend.Controllers;
 // https://localhost:5128/api/Users
 [Route("api/[controller]")]
 [ApiController]
-public class UsersController(TherapyDbContext dbContext, IUserRepository userRepository) : Controller
+public class UsersController(TherapyDbContext dbContext, IUserRepository userRepository, IStudentRepository studentRepository) : Controller
 {
     // GET ALL USERS
     // https://localhost:5128/api/Users
@@ -150,6 +150,36 @@ public class UsersController(TherapyDbContext dbContext, IUserRepository userRep
             Role = userDomain.Role
         };
         return Ok(userDto);
+    }
+    
+    // ASSIGN STUDENT TO USER
+    // https://localhost:5128/api/Users/{userId}/students/{studentId}
+    [HttpPost]
+    [Route("{userId:int}/students/{studentId:int}")]
+    public async Task<IActionResult> AssignStudentsToUser(int userId, [FromBody] StudentAssignDto studentAssignDto)
+    {
+        
+        
+        var user = await userRepository.GetUserWithStudentsAsync(userId);
+        
+        if (user == null) return NotFound();
+        
+        var students = await studentRepository.GetStudentsByIdAsync(StudentAssignDto.StudentIds);
+        
+        Console.WriteLine("Retrieved Student IDs: " + string.Join(", ", students.Select(s => s.Id)));
+        
+        if (!students.Any()) return BadRequest("No valid students provided.");
+        
+        user.UserStudents = students.Select(s => new UserStudent
+        {
+            UserId = userId,
+            StudentId = s.Id
+        }).ToList();
+
+        await userRepository.UpdateAsync(user.Id, user);
+        
+        return Ok("Students assigned successfully.");
+
     }
     
 }

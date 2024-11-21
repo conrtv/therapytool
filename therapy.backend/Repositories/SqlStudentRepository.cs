@@ -60,6 +60,32 @@ public class SqlStudentRepository(TherapyDbContext dbContext) : IStudentReposito
         await dbContext.SaveChangesAsync();
         return existingStudent;
     }
-    
 
+    public async Task<IEnumerable<Student>> GetStudentsByIdAsync(IEnumerable<int> studentIds)
+    {
+        return await dbContext.Students
+            .Where(s => studentIds.Contains(s.Id))
+            .ToListAsync();
+    }
 }
+    // public async Task<Student?> GetStudentsByIdAsync(int studentsId)
+    // {
+    //     return await dbContext.Students
+    //         .Where(s => studentIds.Contains(s.Id))
+    //         .ToListAsync();
+    // }
+
+    // public Task<Student?> GetStudentsByIdAsync(int studentIds)
+    // {
+    //     return await dbContext.Students
+    //         .Where(s => studentIds.Contains(s.Id))
+    //         .ToListAsync();
+    // }
+
+
+    // public async Task<IEnumerable<Student>> GetStudentsByIdAsync(IEnumerable<int> studentIds)
+    // {
+    //     return await dbContext.Students
+    //         .Where(s => studentIds.Contains(s.Id))
+    //         .ToListAsync();
+    // }

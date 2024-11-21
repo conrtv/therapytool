@@ -15,7 +15,14 @@ public class SqlUserRepository(TherapyDbContext dbContext) : IUserRepository
     {
         return await dbContext.Users.Include(user => user.Schools).FirstOrDefaultAsync(u => u.Id == id);
     }
-
+    
+    public async Task<User?> GetUserWithStudentsAsync(int id)
+    {
+        return await dbContext.Users
+            .Include(user => user.UserStudents)
+            .ThenInclude(us => us.Student) // Load the assigned students
+            .FirstOrDefaultAsync(u => u.Id == id);
+    }
     public async Task<User> CreateAsync(User user)
     {
         await dbContext.Users.AddAsync(user);

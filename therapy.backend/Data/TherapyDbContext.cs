@@ -25,6 +25,20 @@ namespace therapy.backend.Data
                 .HasForeignKey(s => s.SchoolId)
                 .IsRequired();
             
+            // Configure UserStudent relationship
+            modelBuilder.Entity<UserStudent>()
+                .HasKey(us => new { us.UserId, us.StudentId });
+
+            modelBuilder.Entity<UserStudent>()
+                .HasOne(us => us.User)
+                .WithMany(u => u.UserStudents)
+                .HasForeignKey(us => us.UserId);
+
+            modelBuilder.Entity<UserStudent>()
+                .HasOne(us => us.Student)
+                .WithMany(s => s.UserStudents)
+                .HasForeignKey(us => us.StudentId);
+            
             // Seed data for Users
             var users = new List<User>()
             {
